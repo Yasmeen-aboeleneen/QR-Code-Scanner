@@ -32,9 +32,18 @@ class _ScanScreenState extends State<ScanScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                sdata,
-                style: const TextStyle(color:  Color.fromARGB(255, 88, 125, 117),fontSize: 35,fontWeight: FontWeight.bold)),
+              Text(sdata,
+                  style: const TextStyle(
+                      color: Color.fromARGB(255, 88, 125, 117),
+                      fontSize: 35,
+                      fontWeight: FontWeight.bold)),
+              Image.asset(
+                'Assets/Images/download.png',
+                width: 200,
+              ),
+              SizedBox(
+                height: 20,
+              ),
               ElevatedButton(
                   onPressed: scanQr,
                   style: ElevatedButton.styleFrom(
