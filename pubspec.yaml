@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   go_router: ^10.0.0
   neon_widgets: ^2.0.0
+  barcode: ^2.2.4
 
 dev_dependencies:
   flutter_test:
@@ -64,9 +65,8 @@ flutter:
   assets:
     - Assets/Images/pic.jpg
     - Assets/Images/bottom.png
-    - Assets/Images/main_bottom.png
-    - Assets/Images/main_top.png
     - Assets/Images/s_top.png
+    - Assets/Images/picc.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
