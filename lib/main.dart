@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:qr_scanner/Splash/Splash_Screen.dart';
+
+import 'Constants.dart';
+import 'core/Utils/AppRouter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,13 +13,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Qr Code Scanner',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const SplashScreen(),
+      routerConfig: AppRouter.router,
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.dark().copyWith(scaffoldBackgroundColor: KprimaryColor),
     );
   }
 }
