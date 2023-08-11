@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:qr_scanner/QRScreens/Create_QRcode.dart';
+import 'package:qr_scanner/QRScreens/Scan_QRcode.dart';
 
 class HomeScreenBody extends StatelessWidget {
   const HomeScreenBody({super.key});
@@ -28,7 +30,10 @@ class HomeScreenBody extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (ctx) => CreateQRcode()));
+              },
               style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 88, 125, 117),
                   side: const BorderSide(color: Colors.orange, width: 1),
@@ -42,7 +47,10 @@ class HomeScreenBody extends StatelessWidget {
               height: 20,
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (ctx) => ScanScreen()));
+              },
               style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 88, 125, 117),
                   side: const BorderSide(color: Colors.orange, width: 1),
@@ -53,6 +61,9 @@ class HomeScreenBody extends StatelessWidget {
               child: const Text('Scan QR code'),
             )
           ],
+        ),
+        SizedBox(
+          width: MediaQuery.of(context).size.width,
         )
       ]),
     );

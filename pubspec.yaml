@@ -38,6 +38,9 @@ dependencies:
   go_router: ^10.0.0
   neon_widgets: ^2.0.0
   barcode: ^2.2.4
+  flutter_barcode_scanner: ^2.0.0
+  barcode_widget: ^2.0.4
+  simple_barcode_scanner: ^0.0.8
 
 dev_dependencies:
   flutter_test:
