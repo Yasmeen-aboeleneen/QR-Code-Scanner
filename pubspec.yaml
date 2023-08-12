@@ -42,6 +42,7 @@ dependencies:
   barcode_widget: ^2.0.4
   simple_barcode_scanner: ^0.0.8
   flutter_native_splash: ^2.3.1
+  url_launcher: ^6.1.12
 
 dev_dependencies:
   flutter_test:
@@ -82,7 +83,7 @@ flutter:
     - Assets/Images/bottom.png
     - Assets/Images/s_top.png
     - Assets/Images/picc.jpg
-    - Assets/Images/download.png
+     
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

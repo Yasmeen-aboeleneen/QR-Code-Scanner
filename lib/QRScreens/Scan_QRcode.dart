@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ScanScreen extends StatefulWidget {
   const ScanScreen({super.key});
@@ -11,6 +12,7 @@ class ScanScreen extends StatefulWidget {
 class _ScanScreenState extends State<ScanScreen> {
   var sdata = "let's Scan it";
   var height, width;
+  bool hasData = false;
 
   @override
   Widget build(BuildContext context) {
@@ -37,13 +39,22 @@ class _ScanScreenState extends State<ScanScreen> {
                       color: Color.fromARGB(255, 88, 125, 117),
                       fontSize: 35,
                       fontWeight: FontWeight.bold)),
-              Image.asset(
-                'Assets/Images/download.png',
-                width: 200,
-              ),
               SizedBox(
                 height: 20,
               ),
+              IconButton(
+                    icon: Icon(Icons.launch_outlined),
+                    onPressed: hasData
+                        ? () async {
+                            if (await canLaunch(sdata)) {
+                              print(sdata);
+                              await launch(sdata);
+                            } else {
+                              throw 'Could not launch ';
+                            }
+                          }
+                        : null,
+                  ),
               ElevatedButton(
                   onPressed: scanQr,
                   style: ElevatedButton.styleFrom(
