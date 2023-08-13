@@ -1,3 +1,5 @@
+ 
+ 
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +31,7 @@ class _CreateQRcodeState extends State<CreateQRcode> {
             const SizedBox(
               height: 60,
             ),
-            BarcodeWidget(
+             BarcodeWidget(
               data: dAta,
               barcode: Barcode.qrCode(),
               color: const Color.fromARGB(255, 88, 125, 117),
