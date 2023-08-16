@@ -25,7 +25,7 @@ class _ScanScreenState extends State<ScanScreen> {
           appBar: AppBar(
             backgroundColor: const Color.fromARGB(255, 88, 125, 117),
             title: const Text(
-              'Scanning QR code',
+              ' QR code Scanner',
               style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
@@ -47,14 +47,15 @@ class _ScanScreenState extends State<ScanScreen> {
                       Flexible(
                         child: Text('${(sdata)}',
                             style: const TextStyle(
-                                color: Color.fromARGB(255, 88, 125, 117),
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold)),
+                              color: Color.fromARGB(255, 88, 125, 117),
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            )),
                       ),
                       IconButton(
                           icon: Icon(
                             Icons.launch_outlined,
-                          color: Color.fromARGB(255, 88, 125, 117),
+                            color: Color.fromARGB(255, 88, 125, 117),
                           ),
                           onPressed: () {
                             launchUrlString(sdata);
