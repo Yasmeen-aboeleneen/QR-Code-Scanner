@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -19,6 +20,9 @@ class _QRGeneratorSharePageState extends State<QRGeneratorSharePage> {
       '<a class="vglnk" href="http://androidride.com" rel="nofollow"><span>androidride</span><span>.</span><span>com</span></a>';
   final textcontroller = TextEditingController();
   File? file;
+  Color pickerColor = Color(0xff443a49);
+  Color currentColor = Color(0xff443a49);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,8 +44,17 @@ class _QRGeneratorSharePageState extends State<QRGeneratorSharePage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  IconButton(
+                      onPressed: () => showPicker(),
+                      icon: Icon(Icons.colorize_sharp,
+                          color: const Color.fromARGB(
+                            255,
+                            88,
+                            125,
+                            117,
+                          ))),
                   QrImageView(
-                    foregroundColor: const Color.fromARGB(255, 88, 125, 117),
+                    foregroundColor: currentColor,
                     size: 220,
                     data: textdata,
                   ),
@@ -83,7 +96,7 @@ class _QRGeneratorSharePageState extends State<QRGeneratorSharePage> {
             ),
           ),
           SizedBox(
-            height: 50,
+            height: 13,
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -137,6 +150,39 @@ class _QRGeneratorSharePageState extends State<QRGeneratorSharePage> {
           )
         ],
       ),
+    );
+  }
+
+  void changeColor(Color color) {
+    setState(() => pickerColor = color);
+  }
+
+  Future showPicker() {
+    return showDialog(
+      builder: (context) => AlertDialog(
+        title: const Text('Pick a color!'),
+        content: SingleChildScrollView(
+          child: ColorPicker(
+            pickerColor: pickerColor,
+            onColorChanged: changeColor,
+          ),
+        ),
+        actions: <Widget>[
+          ElevatedButton(
+              child: const Text('Change'),
+              onPressed: () {
+                setState(() => currentColor = pickerColor);
+                Navigator.of(context).pop();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 88, 125, 117),
+                side: const BorderSide(color: Colors.orange, width: 1),
+                shape: const BeveledRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+              )),
+        ],
+      ),
+      context: context,
     );
   }
 }
