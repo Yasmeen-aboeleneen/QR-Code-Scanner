@@ -1,14 +1,10 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-
 import 'package:flutter/services.dart';
-
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import 'package:url_launcher/url_launcher_string.dart';
 
 class ScanScreen extends StatefulWidget {
@@ -82,7 +78,6 @@ class _ScanScreenState extends State<ScanScreen> {
                                 ),
                                 onPressed: () {
                                   launchUrlString(sdata);
-                                  
                                 }),
                             IconButton(
                                 icon: Icon(
@@ -184,6 +179,4 @@ class _ScanScreenState extends State<ScanScreen> {
       throw 'Could not launch $url';
     }
   }
-
-   
 }
