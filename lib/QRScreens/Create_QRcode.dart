@@ -21,7 +21,7 @@ class _QRGeneratorSharePageState extends State<QRGeneratorSharePage> {
   final textcontroller = TextEditingController();
   File? file;
   Color pickerColor = Color(0xff443a49);
-  Color currentColor = Color(0xff443a49);
+  Color currentColor = const Color.fromARGB(255, 88, 125, 117);
 
   @override
   Widget build(BuildContext context) {
