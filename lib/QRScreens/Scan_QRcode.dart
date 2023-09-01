@@ -16,6 +16,7 @@ class ScanScreen extends StatefulWidget {
 
 class _ScanScreenState extends State<ScanScreen> {
   String sdata = "No data found !";
+
   var height, width;
   bool hasData = false;
   File? file;
@@ -55,8 +56,10 @@ class _ScanScreenState extends State<ScanScreen> {
                         Flexible(
                           child: GestureDetector(
                             child: Linkify(
+                                options: LinkifyOptions(humanize: false),
                                 onOpen: (link) async {
-                                  if (!await launchUrl(Uri.parse(link.url))) {
+                                  if (!await launchUrl(Uri.parse(link.url),
+                                      mode: LaunchMode.externalApplication)) {
                                     throw Exception(
                                         'Could not launch ${link.url}');
                                   }
