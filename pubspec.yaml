@@ -45,11 +45,15 @@ dependencies:
   font_awesome_flutter: ^10.5.0
   share_plus: ^7.1.0
   qr_flutter: ^4.1.0
-  path_provider: ^2.1.0
+  path_provider: ^2.1.1
   qr_code_scanner: ^1.0.1
   flutter_colorpicker: ^1.0.3
   flutter_hsvcolor_picker: ^1.2.3
   flutter_linkify: ^6.0.0
+  pdf: ^3.10.4
+  image_picker: ^1.0.4
+  another_flushbar: ^1.12.30
+  
    
    
    
@@ -98,6 +102,7 @@ flutter:
     - Assets/Images/bottom.png
     - Assets/Images/s_top.png
     - Assets/Images/picc.jpg
+    - Assets/Images/pdf.jpeg
      
 
   # An image asset can refer to one or more resolution-specific "variants", see
