@@ -1,11 +1,4 @@
-import 'dart:io';
-
-import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
 
 class CreatePDF extends StatefulWidget {
   const CreatePDF({super.key});
@@ -15,96 +8,73 @@ class CreatePDF extends StatefulWidget {
 }
 
 class _CreatePDFState extends State<CreatePDF> {
-  final picker = ImagePicker();
-  final pdf = pw.Document();
-  late List<File> _image = [];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Color.fromARGB(255, 110, 138, 132),
-        onPressed: GettingImage,
+        backgroundColor: const Color.fromARGB(255, 88, 125, 117),
+        onPressed: () {},
         child: Icon(
           Icons.add_a_photo_rounded,
           color: Colors.white,
         ),
       ),
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 88, 125, 117),
-        title: Text('Convert Images to PDF'),
-        actions: [
-          IconButton(
-              onPressed: () {
-                CreatePdf();
-                SavePDF();
-              },
-              icon: Icon(
-                Icons.picture_as_pdf_rounded,
-                size: 35,
-              ))
-        ],
-      ),
-      body: _image != null
-          ? ListView.builder(
-              itemCount: _image.length,
-              itemBuilder: (context, index) => Container(
-                height: 400,
-                width: double.infinity,
-                margin: EdgeInsets.all(8),
-                child: Image.file(
-                  _image[index],
-                  fit: BoxFit.cover,
-                ),
+      body: Column(children: [
+        Container(
+          height: 150,
+          width: double.infinity,
+          child: Center(
+              child: Text(
+            'Convert To PDF',
+            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+          )),
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(255, 88, 125, 117),
+            borderRadius: BorderRadius.only(
+                bottomRight: Radius.circular(40),
+                bottomLeft: Radius.circular(40)),
+            shape: BoxShape.rectangle,
+          ),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Container(
+          height: 500,
+          decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.orange,
               ),
-            )
-          : Container(),
+              color: Color.fromARGB(255, 255, 255, 255),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(40),
+                  topRight: Radius.circular(40),
+                  bottomRight: Radius.circular(40),
+                  bottomLeft: Radius.circular(40)),
+              shape: BoxShape.rectangle),
+        ),
+        SizedBox(
+          height: 18,
+        ),
+        ElevatedButton.icon(
+          onPressed: () {},
+          icon: Icon(Icons.picture_as_pdf_outlined),
+          label: Text('Convert'),
+          style: ElevatedButton.styleFrom(
+              fixedSize: Size(170, 50),
+              backgroundColor: const Color.fromARGB(255, 88, 125, 117),
+              side: const BorderSide(color: Colors.orange, width: 1),
+              shape: const BeveledRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(5),
+                    bottomRight: Radius.circular(5),
+                    topLeft: Radius.circular(5),
+                    topRight: Radius.circular(5)),
+              ),
+              textStyle:
+                  const TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
+        ),
+      ]),
     );
-  }
-
-  GettingImage() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      if (pickedFile != null) {
-        _image.add(File(pickedFile.path));
-      } else {
-        print('No File Selected !');
-      }
-    });
-  }
-
-  CreatePdf() async {
-    for (var img in _image) {
-      final image = pw.MemoryImage(img.readAsBytesSync());
-
-      pdf.addPage(pw.Page(
-          pageFormat: PdfPageFormat.a4,
-          build: (pw.Context contex) {
-            return pw.Center(child: pw.Image(image));
-          }));
-    }
-  }
-
-  SavePDF() async {
-    try {
-      final dir = await getExternalStorageDirectory();
-      final file = File('${dir?.path}/filename.pdf');
-      await file.writeAsBytes(await pdf.save());
-      showPrintedMessage('success', 'saved to documents');
-    } catch (e) {
-      showPrintedMessage('error', e.toString());
-    }
-  }
-
-  showPrintedMessage(String title, String msg) {
-    Flushbar(
-      title: title,
-      message: msg,
-      duration: Duration(seconds: 3),
-      icon: Icon(
-        Icons.info,
-        color: Colors.blue,
-      ),
-    )..show(context);
   }
 }
