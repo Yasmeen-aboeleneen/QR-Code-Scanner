@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:qr_scanner/core/Utils/AppRouter.dart';
+
+import 'package:neon_widgets/neon_widgets.dart';
 
 class PDFScrenn extends StatefulWidget {
   const PDFScrenn({super.key});
@@ -11,46 +11,53 @@ class PDFScrenn extends StatefulWidget {
 
 class _PDFScrennState extends State<PDFScrenn> {
   @override
-  void initState() {
-    super.initState();
+  // void initState() {
+  //   super.initState();
 
-    NavigateToCreatePDF();
-  }
+  //   NavigateToCreatePDF();
+  // }
 
-  void NavigateToCreatePDF() {
-    Future.delayed(const Duration(seconds: 2), () {
-      GoRouter.of(context).push(AppRouter.KcreatePdf);
-    });
-  }
+  // void NavigateToCreatePDF() {
+  //   Future.delayed(const Duration(seconds: 2), () {
+  //     GoRouter.of(context).push(AppRouter.KcreatePdf);
+  //   });
+  // }
 
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 245, 244, 244),
       body: Stack(
         children: [
-          Column(
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Center(
-                  child: Text(
-                'Convert images to PDF',
-                style: TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
-              )),
-              SizedBox(
-                height: 25,
-              ),
-              Center(
-                child: CircleAvatar(
-                  radius: 70,
-                  child: Image.asset(
-                    'Assets/Images/pdf.jpeg',
-                  ),
+                child: FlickerNeonText(
+                  text: "SOON",
+                  fontFamily: 'RobotoSlab-Bold',
+                   
+                  spreadColor: const Color.fromARGB(255, 88, 125, 117),
+                  blurRadius: 40,
+                  textSize: 50,
+                  textColor: Color.fromARGB(255, 0, 0, 0),
                 ),
               ),
+              SizedBox(
+                width: 10,
+              ),
+         NeonTriangleVerticesProgressBar(lightBlurRadius: 20,
+         lightSpreadRadius: 4,
+         pointSize: 2,
+         )
+              // Center(
+              //   child: CircleAvatar(
+              //     radius: 70,
+              //     child: Image.asset(
+              //       'Assets/Images/pdf.jpeg',
+              //     ),
+              //   ),
+              // ),
             ],
           )
         ],

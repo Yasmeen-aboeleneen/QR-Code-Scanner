@@ -41,7 +41,7 @@ class HomeScreenBody extends StatelessWidget {
                       borderRadius: BorderRadius.all(Radius.circular(10))),
                   textStyle:
                       const TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
-              child: const Text('Generate QR code'),
+              child: const Text('Generate QR Code'),
             ),
             SizedBox(
               height: 20,
@@ -59,7 +59,7 @@ class HomeScreenBody extends StatelessWidget {
                       borderRadius: BorderRadius.all(Radius.circular(10))),
                   textStyle:
                       const TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
-              child: const Text('Scan QR code'),
+              child: const Text('Scan Barcode'),
             ),
             SizedBox(height: 20,),
             ElevatedButton(

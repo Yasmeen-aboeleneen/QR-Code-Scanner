@@ -25,130 +25,149 @@ class _QRGeneratorSharePageState extends State<QRGeneratorSharePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: Text('QR Code Generator'),
-        backgroundColor: const Color.fromARGB(255, 88, 125, 117),
-      ),
-      body: Column(
-        children: [
-          SizedBox(
-            height: 40,
-          ),
-          RepaintBoundary(
-            key: key,
-            child: Container(
-              width: double.infinity,
-              color: Colors.white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                      onPressed: () => showPicker(),
-                      icon: Icon(Icons.colorize_sharp,
-                          color: const Color.fromARGB(
-                            255,
-                            88,
-                            125,
-                            117,
-                          ))),
-                  QrImageView(
-                    foregroundColor: currentColor,
-                    size: 220,
-                    data: textdata,
-                  ),
-                  IconButton(
-                      onPressed: () async {
-                        try {
-                          RenderRepaintBoundary boundary = key.currentContext!
-                              .findRenderObject() as RenderRepaintBoundary;
-
-                          var image = await boundary.toImage();
-                          ByteData? byteData = await image.toByteData(
-                              format: ImageByteFormat.png);
-                          Uint8List pngBytes = byteData!.buffer.asUint8List();
-
-                          final appDir =
-                              await getApplicationDocumentsDirectory();
-
-                          var datetime = DateTime.now();
-
-                          file = await File('${appDir.path}/$datetime.png')
-                              .create();
-
-                          await file?.writeAsBytes(pngBytes);
-                          await Share.shareFiles(
-                            [file!.path],
-                            mimeTypes: ["image/png"],
-                            text: "Share the QR Code",
-                          );
-                        } catch (e) {
-                          print(e.toString());
-                        }
-                      },
-                      icon: Icon(
-                        Icons.share,
-                        color: const Color.fromARGB(255, 88, 125, 117),
-                      ))
-                ],
+    return SafeArea(
+      child: Expanded(
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+           
+          body: Column(
+            children: [
+              Container(
+                height: 150,
+                width: double.infinity,
+                child: Center(
+                    child: Text(
+                  'QR Code Generator',
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                )),
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 88, 125, 117),
+                  borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(40),
+                      bottomLeft: Radius.circular(40)),
+                  shape: BoxShape.rectangle,
+                ),
               ),
-            ),
-          ),
-          SizedBox(
-            height: 13,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              alignment: Alignment.center,
-              width: double.infinity,
-              child: TextField(
-                controller: textcontroller,
-                cursorColor: const Color.fromARGB(255, 88, 125, 117),
-                style: const TextStyle(
-                    color: Color.fromARGB(255, 88, 125, 117),
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
-                decoration: const InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: Color.fromARGB(255, 88, 125, 117),
-                          width: 2.5)),
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.orange, width: 2.5)),
-                  hintText: 'Enter Data Here',
-                  hintStyle: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 88, 125, 117),
+              SizedBox(
+                height: 40,
+              ),
+              RepaintBoundary(
+                key: key,
+                child: Container(
+                  width: double.infinity,
+                  color: Colors.white,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                          onPressed: () => showPicker(),
+                          icon: Icon(Icons.colorize_sharp,
+                              color: const Color.fromARGB(
+                                255,
+                                88,
+                                125,
+                                117,
+                              ))),
+                      QrImageView(
+                        foregroundColor: currentColor,
+                        size: 250,
+                        data: textdata,
+                      ),
+                      IconButton(
+                          onPressed: () async {
+                            try {
+                              RenderRepaintBoundary boundary = key.currentContext!
+                                  .findRenderObject() as RenderRepaintBoundary;
+          
+                              var image = await boundary.toImage();
+                              ByteData? byteData = await image.toByteData(
+                                  format: ImageByteFormat.png);
+                              Uint8List pngBytes = byteData!.buffer.asUint8List();
+          
+                              final appDir =
+                                  await getApplicationDocumentsDirectory();
+          
+                              var datetime = DateTime.now();
+          
+                              file = await File('${appDir.path}/$datetime.png')
+                                  .create();
+          
+                              await file?.writeAsBytes(pngBytes);
+                              await Share.shareFiles(
+                                [file!.path],
+                                mimeTypes: ["image/png"],
+                                text: "Share the QR Code",
+                              );
+                            } catch (e) {
+                              print(e.toString());
+                            }
+                          },
+                          icon: Icon(
+                            Icons.share,
+                            color: const Color.fromARGB(255, 88, 125, 117),
+                          ))
+                    ],
                   ),
                 ),
               ),
-            ),
+              SizedBox(
+                height: 13,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  alignment: Alignment.center,
+                  width: double.infinity,
+                  child: TextField(
+                  
+                    controller: textcontroller,
+                    cursorColor: const Color.fromARGB(255, 88, 125, 117),
+                    style: const TextStyle(
+                        color: Color.fromARGB(255, 88, 125, 117),
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                    decoration: const InputDecoration(
+                      
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 88, 125, 117),
+                              width: 2.5)),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.orange, width: 2.5)),
+                      hintText: 'Enter Data Here',
+                      hintStyle: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 88, 125, 117),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 17,
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  setState(() {
+                    textdata = textcontroller.text;
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 88, 125, 117),
+                    side: const BorderSide(color: Colors.orange, width: 1),
+                    shape: const BeveledRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    textStyle:
+                        const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                child: const Text('Generate QR code'),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+              )
+            ],
           ),
-          SizedBox(
-            height: 17,
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              setState(() {
-                textdata = textcontroller.text;
-              });
-            },
-            style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 88, 125, 117),
-                side: const BorderSide(color: Colors.orange, width: 1),
-                shape: const BeveledRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-                textStyle:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            child: const Text('Generate QR code'),
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-          )
-        ],
+        ),
       ),
     );
   }

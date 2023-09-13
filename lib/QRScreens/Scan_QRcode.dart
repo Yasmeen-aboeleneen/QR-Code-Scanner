@@ -27,25 +27,34 @@ class _ScanScreenState extends State<ScanScreen> {
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
-    return Hero(
-      tag: 'Scan QR',
-      child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: const Color.fromARGB(255, 88, 125, 117),
-            title: const Text(
-              ' QR code Scanner',
-              style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 255, 255, 255)),
-            ),
-          ),
-          body: Center(
+    return SafeArea(
+      child: Hero(
+        tag: 'Scan QR',
+        child: Expanded(
+          child: Scaffold(
+              
+              body: Center(
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  Container(
+                    height: 150,
+                    width: double.infinity,
+                    child: Center(
+                        child: Text(
+                      'Barcode Scanner',
+                      style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    )),
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 88, 125, 117),
+                      borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(40),
+                          bottomLeft: Radius.circular(40)),
+                      shape: BoxShape.rectangle,
+                    ),
+                  ),
                   SizedBox(
                     height: 15,
                   ),
@@ -60,8 +69,7 @@ class _ScanScreenState extends State<ScanScreen> {
                                 onOpen: (link) async {
                                   if (!await launchUrl(Uri.parse(link.url),
                                       mode: LaunchMode.externalApplication)) {
-                                    throw Exception(
-                                        'Could not launch ${link.url}');
+                                    throw Exception('Could not launch ${link.url}');
                                   }
                                 },
                                 text: sdata,
@@ -74,14 +82,14 @@ class _ScanScreenState extends State<ScanScreen> {
                         ),
                         Column(
                           children: [
-                            IconButton(
-                                icon: Icon(
-                                  Icons.launch_outlined,
-                                  color: Color.fromARGB(255, 88, 125, 117),
-                                ),
-                                onPressed: () {
-                                  launchUrlString(sdata);
-                                }),
+                            // IconButton(
+                            //     icon: Icon(
+                            //       Icons.launch_outlined,
+                            //       color: Color.fromARGB(255, 88, 125, 117),
+                            //     ),
+                            //     onPressed: () {
+                            //       launchUrlString(sdata);
+                            //     }),
                             IconButton(
                                 icon: Icon(
                                   Icons.copy,
@@ -118,13 +126,10 @@ class _ScanScreenState extends State<ScanScreen> {
                         });
                       },
                       style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromARGB(255, 88, 125, 117),
-                          side:
-                              const BorderSide(color: Colors.orange, width: 1),
+                          backgroundColor: const Color.fromARGB(255, 88, 125, 117),
+                          side: const BorderSide(color: Colors.orange, width: 1),
                           shape: const BeveledRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
+                              borderRadius: BorderRadius.all(Radius.circular(10))),
                           textStyle: const TextStyle(
                               fontSize: 28, fontWeight: FontWeight.bold)),
                       child: const Text(('Scanner'))),
@@ -135,6 +140,8 @@ class _ScanScreenState extends State<ScanScreen> {
               ),
             ),
           )),
+        ),
+      ),
     );
   }
 
