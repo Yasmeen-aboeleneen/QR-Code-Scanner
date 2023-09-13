@@ -30,117 +30,115 @@ class _ScanScreenState extends State<ScanScreen> {
     return SafeArea(
       child: Hero(
         tag: 'Scan QR',
-        child: Expanded(
-          child: Scaffold(
-              
-              body: Center(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 150,
-                    width: double.infinity,
-                    child: Center(
-                        child: Text(
-                      'Barcode Scanner',
-                      style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                    )),
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 88, 125, 117),
-                      borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(40),
-                          bottomLeft: Radius.circular(40)),
-                      shape: BoxShape.rectangle,
-                    ),
+        child: Scaffold(
+            
+            body: SingleChildScrollView(
+              child: Center(
+                      child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  height: 100,
+                  width: double.infinity,
+                  child: Center(
+                      child: Text(
+                    'Barcode Scanner',
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  )),
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 88, 125, 117),
+                    borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(40),
+                        bottomLeft: Radius.circular(40)),
+                    shape: BoxShape.rectangle,
                   ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Row(
-                      children: [
-                        Flexible(
-                          child: GestureDetector(
-                            child: Linkify(
-                                options: LinkifyOptions(humanize: false),
-                                onOpen: (link) async {
-                                  if (!await launchUrl(Uri.parse(link.url),
-                                      mode: LaunchMode.externalApplication)) {
-                                    throw Exception('Could not launch ${link.url}');
-                                  }
-                                },
-                                text: sdata,
-                                style: TextStyle(
-                                  color: currentColor,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                )),
-                          ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    children: [
+                      Flexible(
+                        child: GestureDetector(
+                          child: Linkify(
+                              options: LinkifyOptions(humanize: false),
+                              onOpen: (link) async {
+                                if (!await launchUrl(Uri.parse(link.url),
+                                    mode: LaunchMode.externalApplication)) {
+                                  throw Exception('Could not launch ${link.url}');
+                                }
+                              },
+                              text: sdata,
+                              style: TextStyle(
+                                color: currentColor,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              )),
                         ),
-                        Column(
-                          children: [
-                            // IconButton(
-                            //     icon: Icon(
-                            //       Icons.launch_outlined,
-                            //       color: Color.fromARGB(255, 88, 125, 117),
-                            //     ),
-                            //     onPressed: () {
-                            //       launchUrlString(sdata);
-                            //     }),
-                            IconButton(
-                                icon: Icon(
-                                  Icons.copy,
-                                  color: Color.fromARGB(255, 88, 125, 117),
-                                ),
-                                onPressed: () {
-                                  Clipboard.setData(ClipboardData(
-                                    text: sdata,
-                                  ));
-                                }),
-                            IconButton(
-                                onPressed: () => showPicker(),
-                                icon: Icon(Icons.colorize_sharp,
-                                    color: const Color.fromARGB(
-                                      255,
-                                      88,
-                                      125,
-                                      117,
-                                    ))),
-                          ],
-                        ),
-                      ],
+                      ),
+                      Column(
+                        children: [
+                          // IconButton(
+                          //     icon: Icon(
+                          //       Icons.launch_outlined,
+                          //       color: Color.fromARGB(255, 88, 125, 117),
+                          //     ),
+                          //     onPressed: () {
+                          //       launchUrlString(sdata);
+                          //     }),
+                          IconButton(
+                              icon: Icon(
+                                Icons.copy,
+                                color: Color.fromARGB(255, 88, 125, 117),
+                              ),
+                              onPressed: () {
+                                Clipboard.setData(ClipboardData(
+                                  text: sdata,
+                                ));
+                              }),
+                          IconButton(
+                              onPressed: () => showPicker(),
+                              icon: Icon(Icons.colorize_sharp,
+                                  color: const Color.fromARGB(
+                                    255,
+                                    88,
+                                    125,
+                                    117,
+                                  ))),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                    onPressed: () async {
+                      var data = await FlutterBarcodeScanner.scanBarcode(
+                          '#2A99CF', 'cancel', true, ScanMode.QR);
+                      setState(() {
+                        sdata = data.toString();
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(255, 88, 125, 117),
+                        side: const BorderSide(color: Colors.orange, width: 1),
+                        shape: const BeveledRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10))),
+                        textStyle: const TextStyle(
+                            fontSize: 28, fontWeight: FontWeight.bold)),
+                    child: const Text(('Scanner'))),
+                SizedBox(
+                  height: width,
+                )
+              ],
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  ElevatedButton(
-                      onPressed: () async {
-                        var data = await FlutterBarcodeScanner.scanBarcode(
-                            '#2A99CF', 'cancel', true, ScanMode.QR);
-                        setState(() {
-                          sdata = data.toString();
-                        });
-                      },
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(255, 88, 125, 117),
-                          side: const BorderSide(color: Colors.orange, width: 1),
-                          shape: const BeveledRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10))),
-                          textStyle: const TextStyle(
-                              fontSize: 28, fontWeight: FontWeight.bold)),
-                      child: const Text(('Scanner'))),
-                  SizedBox(
-                    height: width,
-                  )
-                ],
-              ),
-            ),
-          )),
-        ),
+            )),
       ),
     );
   }

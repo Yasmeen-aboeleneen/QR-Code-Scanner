@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'Constants.dart';
 import 'core/Utils/AppRouter.dart';
 
@@ -13,11 +13,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Scan',
-      routerConfig: AppRouter.router,
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark().copyWith(scaffoldBackgroundColor: KprimaryColor),
+    return ResponsiveSizer(
+      builder: (BuildContext, Orientation, ScreenType) => MaterialApp.router(
+        title: 'Scan',
+        routerConfig: AppRouter.router,
+        debugShowCheckedModeBanner: false,
+        theme:
+            ThemeData.dark().copyWith(scaffoldBackgroundColor: KprimaryColor),
+      ),
     );
   }
 }
