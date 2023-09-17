@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:qr_scanner/AddManger.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -23,6 +25,42 @@ class _ScanScreenState extends State<ScanScreen> {
   Color pickerColor = Color(0xff443a49);
   Color currentColor = const Color.fromARGB(255, 88, 125, 117);
 
+  BannerAd? bannerAddd;
+
+  bool isLoaded = false;
+
+  void load() {
+    bannerAddd = BannerAd(
+        size: AdSize.banner,
+        adUnitId: AddManger.BannerScan,
+        listener: BannerAdListener(
+          onAdLoaded: (ad) {
+            setState(() {
+              isLoaded = true;
+            });
+          },
+          onAdFailedToLoad: (ad, error) {
+            ad.dispose();
+          },
+        ),
+        request: AdRequest())
+      ..load();
+  }
+
+  @override
+  void initState() {
+    load();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    if (isLoaded) {
+      bannerAddd!.dispose();
+    }
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
@@ -31,10 +69,9 @@ class _ScanScreenState extends State<ScanScreen> {
       child: Hero(
         tag: 'Scan QR',
         child: Scaffold(
-            
             body: SingleChildScrollView(
-              child: Center(
-                      child: Column(
+          child: Center(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -68,7 +105,8 @@ class _ScanScreenState extends State<ScanScreen> {
                               onOpen: (link) async {
                                 if (!await launchUrl(Uri.parse(link.url),
                                     mode: LaunchMode.externalApplication)) {
-                                  throw Exception('Could not launch ${link.url}');
+                                  throw Exception(
+                                      'Could not launch ${link.url}');
                                 }
                               },
                               text: sdata,
@@ -125,20 +163,31 @@ class _ScanScreenState extends State<ScanScreen> {
                       });
                     },
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 88, 125, 117),
+                        backgroundColor:
+                            const Color.fromARGB(255, 88, 125, 117),
                         side: const BorderSide(color: Colors.orange, width: 1),
                         shape: const BeveledRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10))),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
                         textStyle: const TextStyle(
                             fontSize: 28, fontWeight: FontWeight.bold)),
                     child: const Text(('Scanner'))),
                 SizedBox(
+                  height: 90,
+                ),
+                Center(
+                    child: SizedBox(
+                  width: bannerAddd!.size.width.toDouble(),
+                  height: bannerAddd!.size.height.toDouble(),
+                  child: AdWidget(ad: bannerAddd!),
+                )),
+                SizedBox(
                   height: width,
                 )
               ],
-                      ),
-                    ),
-            )),
+            ),
+          ),
+        )),
       ),
     );
   }
