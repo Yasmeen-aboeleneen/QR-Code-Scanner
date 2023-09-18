@@ -11,18 +11,6 @@ class PDFScrenn extends StatefulWidget {
 
 class _PDFScrennState extends State<PDFScrenn> {
   @override
-  // void initState() {
-  //   super.initState();
-
-  //   NavigateToCreatePDF();
-  // }
-
-  // void NavigateToCreatePDF() {
-  //   Future.delayed(const Duration(seconds: 2), () {
-  //     GoRouter.of(context).push(AppRouter.KcreatePdf);
-  //   });
-  // }
-
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 245, 244, 244),
@@ -36,7 +24,6 @@ class _PDFScrennState extends State<PDFScrenn> {
                 child: FlickerNeonText(
                   text: "SOON",
                   fontFamily: 'RobotoSlab-Bold',
-                   
                   spreadColor: const Color.fromARGB(255, 88, 125, 117),
                   blurRadius: 40,
                   textSize: 50,
@@ -46,18 +33,11 @@ class _PDFScrennState extends State<PDFScrenn> {
               SizedBox(
                 width: 10,
               ),
-         NeonTriangleVerticesProgressBar(lightBlurRadius: 20,
-         lightSpreadRadius: 4,
-         pointSize: 2,
-         )
-              // Center(
-              //   child: CircleAvatar(
-              //     radius: 70,
-              //     child: Image.asset(
-              //       'Assets/Images/pdf.jpeg',
-              //     ),
-              //   ),
-              // ),
+              NeonTriangleVerticesProgressBar(
+                lightBlurRadius: 20,
+                lightSpreadRadius: 4,
+                pointSize: 2,
+              )
             ],
           )
         ],

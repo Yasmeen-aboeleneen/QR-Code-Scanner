@@ -74,7 +74,7 @@ class _ScanScreenState extends State<ScanScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
+              children: <Widget>[
                 Container(
                   height: 100,
                   width: double.infinity,
@@ -173,7 +173,7 @@ class _ScanScreenState extends State<ScanScreen> {
                             fontSize: 28, fontWeight: FontWeight.bold)),
                     child: const Text(('Scanner'))),
                 SizedBox(
-                  height: 90,
+                  height: 50,
                 ),
                 Center(
                     child: SizedBox(
