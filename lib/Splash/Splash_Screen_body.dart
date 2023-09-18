@@ -32,7 +32,7 @@ class _SplashScreenBodyState extends State<SplashScreenBody>
     animationController.forward();
   }
 
-  void  NavigateToHomeScreen() {
+  void NavigateToHomeScreen() {
     Future.delayed(const Duration(seconds: 3), () {
       // Get.to(() => const HomeScreen(),
       //     transition: Transition.zoom, duration: Ktransition);
@@ -48,7 +48,7 @@ class _SplashScreenBodyState extends State<SplashScreenBody>
 
   @override
   Widget build(BuildContext context) {
-    return  SafeArea(
+    return SafeArea(
       child: Scaffold(
           body: SizedBox(
         height: double.infinity,
