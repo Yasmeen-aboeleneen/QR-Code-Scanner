@@ -1,5 +1,5 @@
 class AddManger {
-  static bool istest = false;
+  static bool istest = true;
   static String BannerHome = istest
       ? 'ca-app-pub-3940256099942544/6300978111'
       : 'ca-app-pub-2437232343309543/4640724296';
@@ -11,4 +11,8 @@ class AddManger {
   static String BannerScan = istest
       ? 'ca-app-pub-3940256099942544/6300978111'
       : 'ca-app-pub-2437232343309543/2032541124';
+
+      
+
+  
 }

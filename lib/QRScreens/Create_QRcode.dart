@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:qr_scanner/AddManger.dart';
+
 import 'package:share_plus/share_plus.dart';
 
 class QRGeneratorSharePage extends StatefulWidget {
@@ -27,42 +27,6 @@ class _QRGeneratorSharePageState extends State<QRGeneratorSharePage> {
 
   var height, width;
 
-  BannerAd? bannerAdd;
-
-  bool isLoaded = false;
-
-  void load() {
-    bannerAdd = BannerAd(
-        size: AdSize.banner,
-        adUnitId: AddManger.BannerQR,
-        listener: BannerAdListener(
-          onAdLoaded: (ad) {
-            setState(() {
-              isLoaded = true;
-            });
-          },
-          onAdFailedToLoad: (ad, error) {
-            ad.dispose();
-          },
-        ),
-        request: AdRequest())
-      ..load();
-  }
-
-  @override
-  void initState() {
-    load();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    if (isLoaded) {
-      bannerAdd!.dispose();
-    }
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
@@ -71,6 +35,8 @@ class _QRGeneratorSharePageState extends State<QRGeneratorSharePage> {
       child: Scaffold(
         body: SingleChildScrollView(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 height: 100,
@@ -99,55 +65,82 @@ class _QRGeneratorSharePageState extends State<QRGeneratorSharePage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      IconButton(
-                          onPressed: () => showPicker(),
-                          icon: Icon(Icons.colorize_sharp,
-                              color: const Color.fromARGB(
-                                255,
-                                88,
-                                125,
-                                117,
-                              ))),
+                      Column(
+                        children: [
+                          IconButton(
+                              onPressed: () => showPicker(),
+                              icon: Icon(Icons.colorize_sharp,
+                                  color: const Color.fromARGB(
+                                    255,
+                                    88,
+                                    125,
+                                    117,
+                                  ))),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          IconButton(
+                              onPressed: () => SelectIcon(),
+                              icon: Icon(
+                                Icons.library_add_rounded,
+                                color: const Color.fromARGB(255, 88, 125, 117),
+                              ))
+                        ],
+                      ),
                       QrImageView(
                         foregroundColor: currentColor,
                         size: 250,
                         data: textdata,
                       ),
-                      IconButton(
-                          onPressed: () async {
-                            try {
-                              RenderRepaintBoundary boundary =
-                                  key.currentContext!.findRenderObject()
-                                      as RenderRepaintBoundary;
+                      Column(
+                        children: [
+                          IconButton(
+                              onPressed: () async {
+                                try {
+                                  RenderRepaintBoundary boundary =
+                                      key.currentContext!.findRenderObject()
+                                          as RenderRepaintBoundary;
 
-                              var image = await boundary.toImage();
-                              ByteData? byteData = await image.toByteData(
-                                  format: ImageByteFormat.png);
-                              Uint8List pngBytes =
-                                  byteData!.buffer.asUint8List();
+                                  var image = await boundary.toImage();
+                                  ByteData? byteData = await image.toByteData(
+                                      format: ImageByteFormat.png);
+                                  Uint8List pngBytes =
+                                      byteData!.buffer.asUint8List();
 
-                              final appDir =
-                                  await getApplicationDocumentsDirectory();
+                                  final appDir =
+                                      await getApplicationDocumentsDirectory();
 
-                              var datetime = DateTime.now();
+                                  var datetime = DateTime.now();
 
-                              file = await File('${appDir.path}/$datetime.png')
-                                  .create();
+                                  file =
+                                      await File('${appDir.path}/$datetime.png')
+                                          .create();
 
-                              await file?.writeAsBytes(pngBytes);
-                              await Share.shareFiles(
-                                [file!.path],
-                                mimeTypes: ["image/png"],
-                                text: "Share the QR Code",
-                              );
-                            } catch (e) {
-                              print(e.toString());
-                            }
-                          },
-                          icon: Icon(
-                            Icons.share,
-                            color: const Color.fromARGB(255, 88, 125, 117),
-                          ))
+                                  await file?.writeAsBytes(pngBytes);
+                                  await Share.shareFiles(
+                                    [file!.path],
+                                    mimeTypes: ["image/png"],
+                                    text: "Share the QR Code",
+                                  );
+                                } catch (e) {
+                                  print(e.toString());
+                                }
+                              },
+                              icon: Icon(
+                                Icons.share,
+                                color: const Color.fromARGB(255, 88, 125, 117),
+                              )),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.save,
+                                color: const Color.fromARGB(255, 88, 125, 117),
+                              ))
+                        ],
+                      )
                     ],
                   ),
                 ),
@@ -205,6 +198,7 @@ class _QRGeneratorSharePageState extends State<QRGeneratorSharePage> {
               ),
               SizedBox(
                 width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
               )
             ],
           ),
@@ -220,7 +214,7 @@ class _QRGeneratorSharePageState extends State<QRGeneratorSharePage> {
   Future showPicker() {
     return showDialog(
       builder: (context) => AlertDialog(
-        title: const Text('Pick a color!'),
+        title: Center(child: const Text('Pick a color!')),
         content: SingleChildScrollView(
           child: ColorPicker(
             pickerColor: pickerColor,
@@ -243,15 +237,11 @@ class _QRGeneratorSharePageState extends State<QRGeneratorSharePage> {
           SizedBox(
             height: 35,
           ),
-          Center(
-              child: SizedBox(
-            width: bannerAdd!.size.width.toDouble(),
-            height: bannerAdd!.size.height.toDouble(),
-            child: AdWidget(ad: bannerAdd!),
-          ))
         ],
       ),
       context: context,
     );
   }
+
+  SelectIcon() {}
 }

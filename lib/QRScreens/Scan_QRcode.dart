@@ -4,8 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:qr_scanner/AddManger.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -25,42 +24,6 @@ class _ScanScreenState extends State<ScanScreen> {
   Color pickerColor = Color(0xff443a49);
   Color currentColor = const Color.fromARGB(255, 88, 125, 117);
 
-  BannerAd? bannerAddd;
-
-  bool isLoaded = false;
-
-  void load() {
-    bannerAddd = BannerAd(
-        size: AdSize.banner,
-        adUnitId: AddManger.BannerScan,
-        listener: BannerAdListener(
-          onAdLoaded: (ad) {
-            setState(() {
-              isLoaded = true;
-            });
-          },
-          onAdFailedToLoad: (ad, error) {
-            ad.dispose();
-          },
-        ),
-        request: AdRequest())
-      ..load();
-  }
-
-  @override
-  void initState() {
-    load();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    if (isLoaded) {
-      bannerAddd!.dispose();
-    }
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
@@ -72,7 +35,7 @@ class _ScanScreenState extends State<ScanScreen> {
             body: SingleChildScrollView(
           child: Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Container(
@@ -119,14 +82,6 @@ class _ScanScreenState extends State<ScanScreen> {
                       ),
                       Column(
                         children: [
-                          // IconButton(
-                          //     icon: Icon(
-                          //       Icons.launch_outlined,
-                          //       color: Color.fromARGB(255, 88, 125, 117),
-                          //     ),
-                          //     onPressed: () {
-                          //       launchUrlString(sdata);
-                          //     }),
                           IconButton(
                               icon: Icon(
                                 Icons.copy,
@@ -157,7 +112,12 @@ class _ScanScreenState extends State<ScanScreen> {
                 ElevatedButton(
                     onPressed: () async {
                       var data = await FlutterBarcodeScanner.scanBarcode(
-                          '#2A99CF', 'cancel', true, ScanMode.QR);
+                        '#2A99CF',
+                        'cancel',
+                        true,
+                        ScanMode.QR,
+                      );
+
                       setState(() {
                         sdata = data.toString();
                       });
@@ -175,14 +135,9 @@ class _ScanScreenState extends State<ScanScreen> {
                 SizedBox(
                   height: 50,
                 ),
-                Center(
-                    child: SizedBox(
-                  width: bannerAddd!.size.width.toDouble(),
-                  height: bannerAddd!.size.height.toDouble(),
-                  child: AdWidget(ad: bannerAddd!),
-                )),
                 SizedBox(
-                  height: width,
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
                 )
               ],
             ),
