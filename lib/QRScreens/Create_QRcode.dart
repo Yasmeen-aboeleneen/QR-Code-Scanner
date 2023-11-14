@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:path_provider/path_provider.dart';
@@ -22,8 +23,10 @@ class _QRGeneratorSharePageState extends State<QRGeneratorSharePage> {
       '<a class="vglnk" href="http://androidride.com" rel="nofollow"><span>androidride</span><span>.</span><span>com</span></a>';
   final textcontroller = TextEditingController();
   File? file;
+  File? image;
   Color pickerColor = Color(0xff443a49);
   Color currentColor = const Color.fromARGB(255, 88, 125, 117);
+  
 
   var height, width;
 
@@ -80,17 +83,21 @@ class _QRGeneratorSharePageState extends State<QRGeneratorSharePage> {
                             height: 10,
                           ),
                           IconButton(
-                              onPressed: () => SelectIcon(),
+                              onPressed:
+                              
+                               () {},
                               icon: Icon(
                                 Icons.library_add_rounded,
                                 color: const Color.fromARGB(255, 88, 125, 117),
                               ))
                         ],
                       ),
+                      
                       QrImageView(
                         foregroundColor: currentColor,
                         size: 250,
                         data: textdata,
+                         
                       ),
                       Column(
                         children: [
@@ -243,5 +250,18 @@ class _QRGeneratorSharePageState extends State<QRGeneratorSharePage> {
     );
   }
 
-  SelectIcon() {}
+  
+
+  Future pickImage(File? image) async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery,imageQuality: 100);
+if(image == null) return;
+final imageTemp = File(image.path);
+setState(() => this.image = imageTemp);
+    } on PlatformException catch(e) {
+      print('Failed to pick image: $e');
+    }
+  }
+
+  
 }
