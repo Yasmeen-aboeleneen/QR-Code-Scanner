@@ -26,7 +26,6 @@ class _QRGeneratorSharePageState extends State<QRGeneratorSharePage> {
   File? image;
   Color pickerColor = Color(0xff443a49);
   Color currentColor = const Color.fromARGB(255, 88, 125, 117);
-  
 
   var height, width;
 
@@ -82,22 +81,12 @@ class _QRGeneratorSharePageState extends State<QRGeneratorSharePage> {
                           SizedBox(
                             height: 10,
                           ),
-                          IconButton(
-                              onPressed:
-                              
-                               () {},
-                              icon: Icon(
-                                Icons.library_add_rounded,
-                                color: const Color.fromARGB(255, 88, 125, 117),
-                              ))
                         ],
                       ),
-                      
                       QrImageView(
                         foregroundColor: currentColor,
                         size: 250,
                         data: textdata,
-                         
                       ),
                       Column(
                         children: [
@@ -140,12 +129,6 @@ class _QRGeneratorSharePageState extends State<QRGeneratorSharePage> {
                           SizedBox(
                             height: 10,
                           ),
-                          IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.save,
-                                color: const Color.fromARGB(255, 88, 125, 117),
-                              ))
                         ],
                       )
                     ],
@@ -203,10 +186,6 @@ class _QRGeneratorSharePageState extends State<QRGeneratorSharePage> {
                         fontSize: 20, fontWeight: FontWeight.bold)),
                 child: const Text('Generate QR code'),
               ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-              )
             ],
           ),
         ),
@@ -250,18 +229,15 @@ class _QRGeneratorSharePageState extends State<QRGeneratorSharePage> {
     );
   }
 
-  
-
   Future pickImage(File? image) async {
     try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery,imageQuality: 100);
-if(image == null) return;
-final imageTemp = File(image.path);
-setState(() => this.image = imageTemp);
-    } on PlatformException catch(e) {
+      final image = await ImagePicker()
+          .pickImage(source: ImageSource.gallery, imageQuality: 100);
+      if (image == null) return;
+      final imageTemp = File(image.path);
+      setState(() => this.image = imageTemp);
+    } on PlatformException catch (e) {
       print('Failed to pick image: $e');
     }
   }
-
-  
 }

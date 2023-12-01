@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:qr_scanner/PDF/PDFScreen.dart';
 import 'package:qr_scanner/QRScreens/Create_QRcode.dart';
 import 'package:qr_scanner/QRScreens/Scan_QRcode.dart';
 
@@ -19,89 +17,65 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 50,
+      body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(
+              height: 25,
+            ),
+            Center(
+              child: Column(
+                children: [
+                  Image.asset(
+                    'Assets/Images/picc.jpg',
+                    width: 240,
+                  ),
+                ],
               ),
-              Center(
-                child: Column(
-                  children: [
-                    Image.asset(
-                      'Assets/Images/picc.jpg',
-                      width: 240,
-                    ),
-                  ],
-                ),
+            ),
+            const SizedBox(
+              height: 100,
+            ),
+            Column(children: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => QRGeneratorSharePage()));
+                },
+                style: ElevatedButton.styleFrom(
+                    fixedSize: Size(275, 60),
+                    backgroundColor: const Color.fromARGB(255, 88, 125, 117),
+                    side: const BorderSide(color: Colors.orange, width: 1),
+                    shape: const BeveledRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    textStyle: const TextStyle(
+                        fontSize: 26, fontWeight: FontWeight.bold)),
+                child: const Text('Generate QR Code'),
               ),
-              const SizedBox(
-                height: 100,
-              ),
-              Column(children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (ctx) => QRGeneratorSharePage()));
-                  },
-                  style: ElevatedButton.styleFrom(
-                      fixedSize: Size(275, 60),
-                      backgroundColor: const Color.fromARGB(255, 88, 125, 117),
-                      side: const BorderSide(color: Colors.orange, width: 1),
-                      shape: const BeveledRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                      textStyle: const TextStyle(
-                          fontSize: 26, fontWeight: FontWeight.bold)),
-                  child: const Text('Generate QR Code'),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (ctx) => ScanScreen()));
-                  },
-                  style: ElevatedButton.styleFrom(
-                      fixedSize: Size(275, 60),
-                      backgroundColor: const Color.fromARGB(255, 88, 125, 117),
-                      side: const BorderSide(color: Colors.orange, width: 1),
-                      shape: const BeveledRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                      textStyle: const TextStyle(
-                          fontSize: 28, fontWeight: FontWeight.bold)),
-                  child: const Text('Scan Barcode'),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (ctx) => PDFScrenn()));
-                  },
-                  style: ElevatedButton.styleFrom(
-                      fixedSize: Size(275, 60),
-                      backgroundColor: const Color.fromARGB(255, 88, 125, 117),
-                      side: const BorderSide(color: Colors.orange, width: 1),
-                      shape: const BeveledRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                      textStyle: const TextStyle(
-                          fontSize: 28, fontWeight: FontWeight.bold)),
-                  child: const Text('Convert To PDF'),
-                ),
-                SizedBox(
-                  height: 60,
-                ),
-              ]),
               SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-              )
+                height: 25,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (ctx) => ScanScreen()));
+                },
+                style: ElevatedButton.styleFrom(
+                    fixedSize: Size(275, 60),
+                    backgroundColor: const Color.fromARGB(255, 88, 125, 117),
+                    side: const BorderSide(color: Colors.orange, width: 1),
+                    shape: const BeveledRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    textStyle: const TextStyle(
+                        fontSize: 28, fontWeight: FontWeight.bold)),
+                child: const Text('Scan Barcode'),
+              ),
+              SizedBox(
+                height: 60,
+              ),
             ]),
-      ),
+          ]),
     );
   }
 }
