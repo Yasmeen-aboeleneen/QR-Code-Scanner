@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:qr_scanner/AddManger.dart';
 import 'package:qr_scanner/QRScreens/Create_QRcode.dart';
 import 'package:qr_scanner/QRScreens/Scan_QRcode.dart';
 
@@ -11,6 +13,40 @@ class HomeScreenBody extends StatefulWidget {
 
 class _HomeScreenBodyState extends State<HomeScreenBody> {
   var height, width;
+  BannerAd? bannerAd;
+  bool isloaded = false;
+
+  void Load() {
+    bannerAd = BannerAd(
+        size: AdSize.banner,
+        adUnitId: AddManger.BannerHome,
+        listener: BannerAdListener(
+          onAdLoaded: (ad) {
+            setState(() {
+              isloaded = true;
+            });
+          },
+          onAdFailedToLoad: (ad, error) {
+            ad.dispose();
+          },
+        ),
+        request: AdRequest())
+      ..load();
+  }
+
+  @override
+  void initState() {
+    Load();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    if (isloaded) {
+      bannerAd!.dispose();
+    }
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +87,10 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     textStyle: const TextStyle(
                         fontSize: 26, fontWeight: FontWeight.bold)),
-                child: const Text('Generate QR Code'),
+                child: const Text(
+                  'Generate QR Code',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
               SizedBox(
                 height: 25,
@@ -68,12 +107,27 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                     shape: const BeveledRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     textStyle: const TextStyle(
-                        fontSize: 28, fontWeight: FontWeight.bold)),
-                child: const Text('Scan Barcode'),
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                    )),
+                child: const Text(
+                  'Scan Barcode',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
               SizedBox(
-                height: 60,
+                height: 20,
               ),
+              Center(
+                  child: isloaded
+                      ? SizedBox(
+                          width: bannerAd!.size.width.toDouble(),
+                          height: bannerAd!.size.height.toDouble(),
+                          child: AdWidget(ad: bannerAd!),
+                        )
+                      : SizedBox(
+                          height: 60,
+                        ))
             ]),
           ]),
     );

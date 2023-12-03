@@ -5,9 +5,9 @@ import 'Constants.dart';
 import 'core/Utils/AppRouter.dart';
 
 void main() {
-  runApp(const MyApp());
   WidgetsFlutterBinding.ensureInitialized();
   MobileAds.instance.initialize();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

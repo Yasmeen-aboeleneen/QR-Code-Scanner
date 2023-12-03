@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:qr_scanner/AddManger.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -22,6 +24,39 @@ class _ScanScreenState extends State<ScanScreen> {
   File? file;
   Color pickerColor = Color(0xff443a49);
   Color currentColor = const Color.fromARGB(255, 88, 125, 117);
+  BannerAd? bannerAd;
+  bool isloaded = false;
+  void Load() {
+    bannerAd = BannerAd(
+        size: AdSize.banner,
+        adUnitId: AddManger.BannerScan,
+        listener: BannerAdListener(
+          onAdLoaded: (ad) {
+            setState(() {
+              isloaded = true;
+            });
+          },
+          onAdFailedToLoad: (ad, error) {
+            ad.dispose();
+          },
+        ),
+        request: AdRequest())
+      ..load();
+  }
+
+  @override
+  void initState() {
+    Load();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    if (isloaded) {
+      bannerAd!.dispose();
+    }
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -130,10 +165,23 @@ class _ScanScreenState extends State<ScanScreen> {
                                 BorderRadius.all(Radius.circular(10))),
                         textStyle: const TextStyle(
                             fontSize: 28, fontWeight: FontWeight.bold)),
-                    child: const Text(('Scanner'))),
+                    child: const Text(
+                      ('Scanner'),
+                      style: TextStyle(color: Colors.white),
+                    )),
                 SizedBox(
-                  height: 50,
+                  height: 20,
                 ),
+                Center(
+                    child: isloaded
+                        ? SizedBox(
+                            width: bannerAd!.size.width.toDouble(),
+                            height: bannerAd!.size.height.toDouble(),
+                            child: AdWidget(ad: bannerAd!),
+                          )
+                        : SizedBox(
+                            height: 60,
+                          ))
               ],
             ),
           ),
