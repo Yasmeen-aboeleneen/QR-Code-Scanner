@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-
-import 'Constants.dart';
+import 'package:sizer/sizer.dart';
+import 'core/Constants/Colors.dart';
 import 'core/Utils/AppRouter.dart';
 
 void main() {
@@ -13,14 +13,17 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Scan',
-      routerConfig: AppRouter.router,
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark().copyWith(scaffoldBackgroundColor: KprimaryColor),
-    );
+    return Sizer(builder:
+        (BuildContext context, Orientation orientation, DeviceType deviceType) {
+      return MaterialApp.router(
+        title: 'Scan',
+        routerConfig: AppRouter.router,
+        debugShowCheckedModeBanner: false,
+        theme:
+            ThemeData.dark().copyWith(scaffoldBackgroundColor: kPrimaryColor),
+      );
+    });
   }
 }

@@ -2,10 +2,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:qr_scanner/AddManger.dart';
+ import 'package:qr_scanner/AdsManger.dart';
+import 'package:qr_scanner/core/Widgets/TopContainer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -72,22 +72,7 @@ class _ScanScreenState extends State<ScanScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Container(
-                  height: 100,
-                  width: double.infinity,
-                  child: Center(
-                      child: Text(
-                    'Barcode Scanner',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                  )),
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 88, 125, 117),
-                    borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(40),
-                        bottomLeft: Radius.circular(40)),
-                    shape: BoxShape.rectangle,
-                  ),
-                ),
+                TopContainer(text: "Barcode Scanner"),
                 SizedBox(
                   height: 15,
                 ),
@@ -126,15 +111,6 @@ class _ScanScreenState extends State<ScanScreen> {
                                   text: sdata,
                                 ));
                               }),
-                          IconButton(
-                              onPressed: () => showPicker(),
-                              icon: Icon(Icons.colorize_sharp,
-                                  color: const Color.fromARGB(
-                                    255,
-                                    88,
-                                    125,
-                                    117,
-                                  ))),
                         ],
                       ),
                     ],
@@ -200,34 +176,8 @@ class _ScanScreenState extends State<ScanScreen> {
     setState(() => pickerColor = color);
   }
 
-  Future showPicker() {
-    return showDialog(
-      builder: (context) => AlertDialog(
-        title: const Text('Pick a color!'),
-        content: SingleChildScrollView(
-          child: ColorPicker(
-            pickerColor: pickerColor,
-            onColorChanged: changeColor,
-          ),
-        ),
-        actions: <Widget>[
-          ElevatedButton(
-              child: const Text('Change'),
-              onPressed: () {
-                setState(() => currentColor = pickerColor);
-                Navigator.of(context).pop();
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 88, 125, 117),
-                side: const BorderSide(color: Colors.orange, width: 1),
-                shape: const BeveledRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-              )),
-        ],
-      ),
-      context: context,
-    );
-  }
+ 
+ 
 
   void launchh(String url) async {
     if (await launchUrlString(url)) {
@@ -235,3 +185,16 @@ class _ScanScreenState extends State<ScanScreen> {
     }
   }
 }
+
+
+  // Future pickImage(File? image) async {
+  //   try {
+  //     final image = await ImagePicker()
+  //         .pickImage(source: ImageSource.gallery, imageQuality: 100);
+  //     if (image == null) return;
+  //     final imageTemp = File(image.path);
+  //     setState(() => this.image = imageTemp);
+  //   } on PlatformException catch (e) {
+  //     print('Failed to pick image: $e');
+  //   }
+  // }
